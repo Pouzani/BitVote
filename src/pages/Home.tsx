@@ -1,46 +1,53 @@
 import { Table } from "@mui/joy";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { getAllCoins } from "../api/coinService";
 import { Coin } from "../model/coin";
 import TableLoader from "../components/TableLoader";
+import Pagination from "../components/Pagination";
 
 const Home = () => {
 	const [coins, setCoins] = useState<Coin[]>([]);
-	const fetchData = async () => {
+	const [currentPage, setCurrentPage] = useState<number>(1);
+	const [isLoading, setIsLoading] = useState<boolean>(false);
+	const onPageChange = (page: number) => {
+		setCurrentPage(page);
+		console.log(page);
+	};
+	const fetchData = useCallback(async () => {
 		try {
-			const coins: Coin[] = await getAllCoins(1, 7);
+			setIsLoading(true);
+			const coins: Coin[] = await getAllCoins(currentPage, 7);
             //set timeout to simulate loading
-            setTimeout(() => {
-                setCoins(coins);
-            }, 3000);
+			setCoins(coins);
+			setIsLoading(false);
 			// Handle the data or update state as needed
 		} catch (error) {
 			console.error(error);
 			// Handle errors as needed
 		}
-	};
+	},[currentPage]);
 
 	useEffect(() => {
 		fetchData();
-	}, []);
+	}, [fetchData]);
 	return (
-		<div className="flex items-center justify-center">
+		<div className="flex flex-col gap-3 items-center justify-center">
 			<div className="w-2/3">
 				<Table sx={{ "--TableCell-height": "4rem" }}>
 					<thead>
 						<tr>
-							<th>#</th>
+							<th className="hidden lg:table-cell">#</th>
 							<th>Name</th>
 							<th>Price</th>
 							<th>24h%</th>
-							<th>Marketcap</th>
-							<th>Volume</th>
+							<th className="hidden lg:table-cell">Marketcap</th>
+							<th className="hidden lg:table-cell">Volume</th>
 						</tr>
 					</thead>
 					<tbody>
-						{coins.length ? coins.map((coin, index) => (
+						{!isLoading ? coins.map((coin, index) => (
 							<tr key={index} className="">
-								<td>{index + 1}</td>
+								<td className="hidden lg:table-cell">{coin.market_cap_rank}</td>
 								<td className="flex items-center gap-2">
 									<img src={coin.image} className="w-8" />
 									{coin.name}
@@ -55,13 +62,14 @@ const Home = () => {
 										{coin.price_change_percentage_24h}
 									</td>
 								)}
-								<td>{coin.market_cap}</td>
-								<td>{coin.total_volume}</td>
+								<td className="hidden lg:table-cell">{coin.market_cap}</td>
+								<td className="hidden lg:table-cell">{coin.total_volume}</td>
 							</tr>
 						)): <TableLoader />}
 					</tbody>
 				</Table>
 			</div>
+			<Pagination totalPages={7} currentPage={currentPage} onPageChange={onPageChange} />
 		</div>
 	);
 };

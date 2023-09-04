@@ -1,10 +1,9 @@
-import React from 'react'
-import TableLoader from '../components/TableLoader'
+import Navbar from '../components/Navbar'
 
 const Test = () => {
   return (
     <div>
-        <TableLoader />
+        <Navbar />
     </div>
   )
 }
