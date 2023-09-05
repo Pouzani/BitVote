@@ -9,10 +9,11 @@ const Home = () => {
 	const [coins, setCoins] = useState<Coin[]>([]);
 	const [currentPage, setCurrentPage] = useState<number>(1);
 	const [isLoading, setIsLoading] = useState<boolean>(false);
+
 	const onPageChange = (page: number) => {
 		setCurrentPage(page);
-		console.log(page);
 	};
+
 	const fetchData = useCallback(async () => {
 		try {
 			setIsLoading(true);
@@ -69,7 +70,7 @@ const Home = () => {
 					</tbody>
 				</Table>
 			</div>
-			<Pagination totalPages={7} currentPage={currentPage} onPageChange={onPageChange} />
+			<Pagination totalPages={250} onPageChange={onPageChange}/>
 		</div>
 	);
 };

@@ -1,8 +1,13 @@
+import { Box } from '@mui/joy'
 import React from 'react'
 
 const Navbar = () => {
   return (
-    <div>Navbar</div>
+    <div>
+        <Box>
+            
+        </Box>
+    </div>
   )
 }
 

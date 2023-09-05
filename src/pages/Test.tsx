@@ -1,9 +1,9 @@
-import Navbar from '../components/Navbar'
+import VoteModal from '../components/VoteModal'
 
 const Test = () => {
   return (
     <div>
-        <Navbar />
+        <VoteModal />
     </div>
   )
 }
