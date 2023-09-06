@@ -1,9 +1,10 @@
-import { Table } from "@mui/joy";
+import { Button, Table } from "@mui/joy";
 import { useCallback, useEffect, useState } from "react";
 import { getAllCoins } from "../api/coinService";
 import { Coin } from "../model/coin";
 import TableLoader from "../components/TableLoader";
 import Pagination from "../components/Pagination";
+import VoteModal from "../components/VoteModal";
 
 const Home = () => {
 	const [coins, setCoins] = useState<Coin[]>([]);
@@ -18,7 +19,7 @@ const Home = () => {
 		try {
 			setIsLoading(true);
 			const coins: Coin[] = await getAllCoins(currentPage, 7);
-            //set timeout to simulate loading
+			//set timeout to simulate loading
 			setCoins(coins);
 			setIsLoading(false);
 			// Handle the data or update state as needed
@@ -26,7 +27,7 @@ const Home = () => {
 			console.error(error);
 			// Handle errors as needed
 		}
-	},[currentPage]);
+	}, [currentPage]);
 
 	useEffect(() => {
 		fetchData();
@@ -43,35 +44,65 @@ const Home = () => {
 							<th>24h%</th>
 							<th className="hidden lg:table-cell">Marketcap</th>
 							<th className="hidden lg:table-cell">Volume</th>
+							<th>Vote</th>
 						</tr>
 					</thead>
 					<tbody>
-						{!isLoading ? coins.map((coin, index) => (
-							<tr key={index} className="">
-								<td className="hidden lg:table-cell">{coin.market_cap_rank}</td>
-								<td className="flex items-center gap-2">
-									<img src={coin.image} className="w-8" />
-									{coin.name}
-								</td>
-								<td>{coin.current_price}</td>
-								{coin.price_change_percentage_24h >= 0 ? (
-									<td className="text-green-600">
-										{coin.price_change_percentage_24h}
+						{!isLoading ? (
+							coins.map((coin, index) => (
+								<tr key={index} className="">
+									<td className="hidden lg:table-cell">
+										{coin.market_cap_rank}
 									</td>
-								) : (   
-									<td className="text-red-500">
-										{coin.price_change_percentage_24h}
+									<td className="flex items-center gap-2">
+										<img src={coin.image} className="w-8" />
+										{coin.name}
 									</td>
-								)}
-								<td className="hidden lg:table-cell">{coin.market_cap}</td>
-								<td className="hidden lg:table-cell">{coin.total_volume}</td>
-							</tr>
-						)): <TableLoader />}
+									<td>{coin.current_price}</td>
+									{coin.price_change_percentage_24h >= 0 ? (
+										<td className="text-green-600">
+											{coin.price_change_percentage_24h}
+										</td>
+									) : (
+										<td className="text-red-500">
+											{coin.price_change_percentage_24h}
+										</td>
+									)}
+									<td className="hidden lg:table-cell">
+										{coin.market_cap}
+									</td>
+									<td className="hidden lg:table-cell">
+										{coin.total_volume}
+									</td>
+									<td>
+										{!coin.voted ? (
+											<VoteButton />
+										) : (
+											"Already voted"
+										)}
+									</td>
+								</tr>
+							))
+						) : (
+							<TableLoader />
+						)}
 					</tbody>
 				</Table>
 			</div>
-			<Pagination totalPages={250} onPageChange={onPageChange}/>
+			<Pagination totalPages={250} onPageChange={onPageChange} />
 		</div>
+	);
+};
+
+export const VoteButton = () => {
+	const showModal = () => {
+		console.log("show modal");
+	};
+	return (
+		<><Button variant="outlined" color="neutral" onClick={() => showModal()}>
+			Vote
+		</Button>
+		<VoteModal /></>
 	);
 };
 

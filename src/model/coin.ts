@@ -12,4 +12,7 @@ export interface Coin {
     market_cap_change_percentage_24h: number;
     market_cap_change_24h: number;
     total_volume: number;
+    voted?: boolean;
+    upVotes: number;
+    downVotes: number;
 }
