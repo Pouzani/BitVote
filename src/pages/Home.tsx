@@ -5,6 +5,7 @@ import { Coin } from "../model/coin";
 import TableLoader from "../components/TableLoader";
 import Pagination from "../components/Pagination";
 import VoteModal from "../components/VoteModal";
+import Navbar from "../components/Sidebar";
 
 const Home = () => {
 	const [coins, setCoins] = useState<Coin[]>([]);
@@ -33,76 +34,117 @@ const Home = () => {
 		fetchData();
 	}, [fetchData]);
 	return (
-		<div className="flex flex-col gap-3 items-center justify-center">
-			<div className="w-2/3">
-				<Table sx={{ "--TableCell-height": "4rem" }}>
-					<thead>
-						<tr>
-							<th className="hidden lg:table-cell">#</th>
-							<th>Name</th>
-							<th>Price</th>
-							<th>24h%</th>
-							<th className="hidden lg:table-cell">Marketcap</th>
-							<th className="hidden lg:table-cell">Volume</th>
-							<th>Vote</th>
-						</tr>
-					</thead>
-					<tbody>
-						{!isLoading ? (
-							coins.map((coin, index) => (
-								<tr key={index} className="">
-									<td className="hidden lg:table-cell">
-										{coin.market_cap_rank}
-									</td>
-									<td className="flex items-center gap-2">
-										<img src={coin.image} className="w-8" />
-										{coin.name}
-									</td>
-									<td>{coin.current_price}</td>
-									{coin.price_change_percentage_24h >= 0 ? (
-										<td className="text-green-600">
-											{coin.price_change_percentage_24h}
+		<div className="flex">
+			<Navbar />
+			<div className="flex flex-col gap-3 items-center">
+				<div className="w-2/3">
+					<Table
+						sx={{
+							"--TableCell-height": "4rem",
+							backgroundColor: "transparent",
+							"& thead th:nth-child(2)": { width: "40%" },
+							"& tr > *:not(:nth-child(1)):not(:nth-child(2))": {
+								textAlign: "right",
+							},
+						}}
+						hoverRow
+					>
+						<thead>
+							<tr>
+								<th className="hidden lg:table-cell">#</th>
+								<th>Name</th>
+								<th>Price</th>
+								<th>24h%</th>
+								<th className="hidden lg:table-cell">
+									Marketcap
+								</th>
+								<th className="hidden lg:table-cell">Volume</th>
+								<th>Vote</th>
+							</tr>
+						</thead>
+						<tbody>
+							{!isLoading ? (
+								coins.map((coin, index) => (
+									<tr key={index} className="">
+										<td className="hidden lg:table-cell">
+											{coin.market_cap_rank}
 										</td>
-									) : (
-										<td className="text-red-500">
-											{coin.price_change_percentage_24h}
+										<td className="flex items-center gap-2">
+											<img
+												src={coin.image}
+												className="w-8"
+											/>
+											{coin.name}
 										</td>
-									)}
-									<td className="hidden lg:table-cell">
-										{coin.market_cap}
-									</td>
-									<td className="hidden lg:table-cell">
-										{coin.total_volume}
-									</td>
-									<td>
-										{!coin.voted ? (
-											<VoteButton />
+										<td>{coin.current_price}</td>
+										{coin.price_change_percentage_24h >=
+										0 ? (
+											<td className="text-green-600">
+												{
+													coin.price_change_percentage_24h
+												}
+											</td>
 										) : (
-											"Already voted"
+											<td className="text-red-500">
+												{
+													coin.price_change_percentage_24h
+												}
+											</td>
 										)}
-									</td>
-								</tr>
-							))
-						) : (
-							<TableLoader />
-						)}
-					</tbody>
-				</Table>
+										<td className="hidden lg:table-cell">
+											{coin.market_cap}
+										</td>
+										<td className="hidden lg:table-cell">
+											{coin.total_volume}
+										</td>
+										<td>
+											{!coin.voted ? (
+												<VoteButton />
+											) : (
+												"Already voted"
+											)}
+										</td>
+									</tr>
+								))
+							) : (
+								<TableLoader />
+							)}
+						</tbody>
+					</Table>
+				</div>
+				<Pagination totalPages={250} onPageChange={onPageChange} />
 			</div>
-			<Pagination totalPages={250} onPageChange={onPageChange} />
 		</div>
 	);
 };
 
 export const VoteButton = () => {
+	const [hidden, setHidden] = useState<boolean>(true);
 	const showModal = () => {
-		console.log("show modal");
+		hidden ? setHidden(false) : setHidden(true);
+		console.log(hidden);
 	};
 	return (
-		<><Button variant="outlined" color="neutral" onClick={() => showModal()}>
-			Vote
-		</Button>
-		<VoteModal /></>
+		<>
+			<div className="z-[-1]">
+				<Button
+					variant="outlined"
+					color="neutral"
+					onClick={() => showModal()}
+				>
+					Vote
+				</Button>
+			</div>
+			<div className="z-10 absolute">
+				{!hidden ? (
+					<VoteModal
+						closeModal={() => {
+							setHidden(true);
+						}}
+					/>
+				) : null}
+			</div>
+		</>
 	);
 };
 

@@ -19,6 +19,7 @@ type VoteModalProps = {
 	errorPlaceholder: string;
 	errorValue: string;
 	hidden: boolean;
+	closeModal: ()=>void
 };
 
 const VoteModal = ({
@@ -26,18 +27,16 @@ const VoteModal = ({
 	error,
 	errorPlaceholder,
 	errorValue,
+	closeModal,
 }: VoteModalProps) => {
-    const [closed, setClosed] = useState<boolean>(false)
-    const closeModal= ()=>{
-        setClosed(true)
-    }
 	return (
-        !closed?
 		<Card
 			sx={{
 				width: 400,
 				position: "absolute",
+				backgroundColor: "white",
 			}}
+			variant="outlined"
 		>
 			<FormControl error={error}>
 				<div className="flex items-center justify-between py-1">
@@ -71,7 +70,7 @@ const VoteModal = ({
 					This vote percentage is optional.
 				</FormHelperText>
 			</FormControl>
-		</Card>:null
+		</Card>
 	);
 };
 
