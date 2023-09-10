@@ -12,6 +12,8 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import CloseIcon from "@mui/icons-material/Close";
 import { Coin } from "../model/coin";
 import { useState } from "react";
+import { submitVote } from "../api/voteService";
+import { Vote, VoteEnum } from "../model/vote";
 
 type VoteModalProps = {
 	coin: Coin;
@@ -29,6 +31,15 @@ const VoteModal = ({
 	errorValue,
 	closeModal,
 }: VoteModalProps) => {
+	const [votePercentage, setVotePercentage] = useState<number>(0);
+
+	const handleVote = async (voteType:VoteEnum) => {
+		console.log(votePercentage);
+		const vote:Vote={coinId:coin.id, votePercentage, voteType};
+		const response = await submitVote(vote);
+		console.log(response)
+	}
+
 	return (
 		<Card
 			sx={{
@@ -58,12 +69,13 @@ const VoteModal = ({
 							"--Input-focusedThickness": "-1px",
 						}}
 						fullWidth
+						onChange={(e) => {setVotePercentage(Number(e.target.value))}}
 					/>
-					<IconButton variant="outlined">
+					<IconButton variant="outlined" onClick={()=>handleVote(VoteEnum.UP)}>
 						<KeyboardArrowUpIcon />
 					</IconButton>
 					<IconButton variant="outlined">
-						<KeyboardArrowDownIcon />
+						<KeyboardArrowDownIcon onClick={()=>handleVote(VoteEnum.DOWN)}/>
 					</IconButton>
 				</div>
 				<FormHelperText>

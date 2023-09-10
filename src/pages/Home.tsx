@@ -19,7 +19,7 @@ const Home = () => {
 	const fetchData = useCallback(async () => {
 		try {
 			setIsLoading(true);
-			const coins: Coin[] = await getAllCoins(currentPage, 7);
+			const coins: Coin[] = await getAllCoins(currentPage, 12);
 			//set timeout to simulate loading
 			setCoins(coins);
 			setIsLoading(false);
@@ -34,9 +34,9 @@ const Home = () => {
 		fetchData();
 	}, [fetchData]);
 	return (
-		<div className="flex">
+		<div className="flex w-full">
 			<Navbar />
-			<div className="flex flex-col gap-3 items-center">
+			<div className="flex flex-col gap-3 items-center w-full">
 				<div className="w-2/3">
 					<Table
 						sx={{
@@ -46,6 +46,8 @@ const Home = () => {
 							"& tr > *:not(:nth-child(1)):not(:nth-child(2))": {
 								textAlign: "right",
 							},
+							"& thead th:nth-child(7)": { textAlign: "center" },
+							width: "100%"
 						}}
 						hoverRow
 					>
@@ -99,7 +101,7 @@ const Home = () => {
 										</td>
 										<td>
 											{!coin.voted ? (
-												<VoteButton />
+												<VoteButton coin={coin}/>
 											) : (
 												"Already voted"
 											)}
@@ -118,7 +120,7 @@ const Home = () => {
 	);
 };
 
-export const VoteButton = () => {
+export const VoteButton = ({coin}) => {
 	const [hidden, setHidden] = useState<boolean>(true);
 	const showModal = () => {
 		hidden ? setHidden(false) : setHidden(true);
@@ -135,12 +137,13 @@ export const VoteButton = () => {
 					Vote
 				</Button>
 			</div>
-			<div className="z-10 absolute">
+			<div className="z-10 relative right-32">
 				{!hidden ? (
 					<VoteModal
 						closeModal={() => {
 							setHidden(true);
 						}}
+						coin={coin}
 					/>
 				) : null}
 			</div>
