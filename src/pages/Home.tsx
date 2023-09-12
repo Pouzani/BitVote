@@ -1,38 +1,20 @@
 import { Button, Table } from "@mui/joy";
-import { useCallback, useEffect, useState } from "react";
-import { getAllCoins } from "../api/coinService";
+import { useState } from "react";
 import { Coin } from "../model/coin";
 import TableLoader from "../components/TableLoader";
 import Pagination from "../components/Pagination";
 import VoteModal from "../components/VoteModal";
+import useGetCoins from "../hooks/useGetCoins";
 
 const Home = () => {
-	const [coins, setCoins] = useState<Coin[]>([]);
 	const [currentPage, setCurrentPage] = useState<number>(1);
-	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const [rowHoverd, setRowHoverd] = useState<number>(-1);
+
+	const {coins,loading,error} = useGetCoins(currentPage,12);
 
 	const onPageChange = (page: number) => {
 		setCurrentPage(page);
 	};
-
-	const fetchData = useCallback(async () => {
-		try {
-			setIsLoading(true);
-			const coins: Coin[] = await getAllCoins(currentPage, 12);
-			//set timeout to simulate loading
-			setCoins(coins);
-			setIsLoading(false);
-			// Handle the data or update state as needed
-		} catch (error) {
-			console.error(error);
-			// Handle errors as needed
-		}
-	}, [currentPage]);
-
-	useEffect(() => {
-		fetchData();
-	}, [fetchData]);
 
 	return (
 		<div className="flex flex-col gap-3 items-center w-full">
@@ -61,7 +43,7 @@ const Home = () => {
 						</tr>
 					</thead>
 					<tbody>
-						{!isLoading ? (
+						{!loading ? (
 							coins.map((coin, index) => (
 								<tr
 									key={index}
@@ -120,7 +102,7 @@ const Home = () => {
 	);
 };
 
-export const VoteButton = ({ coin }) => {
+export const VoteButton = ({ coin }:{coin:Coin}) => {
 	const [hidden, setHidden] = useState<boolean>(true);
 	const showModal = () => {
 		hidden ? setHidden(false) : setHidden(true);

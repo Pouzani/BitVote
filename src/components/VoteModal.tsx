@@ -2,10 +2,8 @@ import {
 	Card,
 	FormControl,
 	FormHelperText,
-	FormLabel,
 	IconButton,
 	Input,
-	Typography,
 } from "@mui/joy";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
@@ -26,18 +24,23 @@ type VoteModalProps = {
 
 const VoteModal = ({
 	coin,
-	error,
 	errorPlaceholder,
-	errorValue,
 	closeModal,
 }: VoteModalProps) => {
 	const [votePercentage, setVotePercentage] = useState<number>(0);
+	const [error, setError] = useState<boolean>(false);
 
 	const handleVote = async (voteType:VoteEnum) => {
 		console.log(votePercentage);
 		const vote:Vote={coinId:coin.id, votePercentage, voteType};
-		const response = await submitVote(vote);
-		console.log(response)
+		try{
+			const response = await submitVote(vote);
+			console.log(response)
+			closeModal();
+		}catch(e){
+			console.log(e)
+			setError(true);
+		}
 	}
 
 	return (

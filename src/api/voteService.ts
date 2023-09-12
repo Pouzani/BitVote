@@ -13,9 +13,10 @@ export async function submitVote(vote:Vote) {
     
 }
 
-export async function getVotes(coinId:string) {
+export async function getVotesByCoin(coinId:string) {
     try{
         const response = await axios.get(`/votes/${coinId}`);
+        console.log(response.data)
         return response.data;
     } catch (error) {
         console.log(error);

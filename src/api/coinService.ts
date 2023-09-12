@@ -15,3 +15,13 @@ export async function getAllCoins(page: number, size: number) {
 		throw error;
 	}
 }
+
+export async function getCoin(id: string) {
+	try {
+		const response = await axios.get(`/coins/${id}`);
+		return response.data;
+	} catch (error) {
+		console.log(error);
+		throw error;
+	}
+}
