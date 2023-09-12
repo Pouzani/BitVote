@@ -8,3 +8,10 @@ export const enum VoteEnum{
     UP,
     DOWN
 }
+
+export interface Votes{
+    votes: Vote[];
+    upVotes: number;
+    downVotes: number;
+    totlaVotes: number;
+}

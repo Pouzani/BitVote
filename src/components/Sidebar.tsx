@@ -10,9 +10,10 @@ import { AlertCircle, ArrowLeft, Home, Settings, Users } from "react-feather";
 // import MuiLogo from './MuiLogo';
 import { openSidebar, closeSidebar, Selected } from "../utils/navbarUtils";
 import { Link } from "react-router-dom";
+import Logo from "./Logo";
 // import ColorSchemeToggle from './ColorSchemeToggle';
 
-export default function FirstSidebar() {
+export default function Sidebar() {
 	const [selected, setSelected] = React.useState(Selected.HOME);
 	return (
 		<Sheet
@@ -59,7 +60,7 @@ export default function FirstSidebar() {
 			>
 				<ArrowLeft />
 			</IconButton>
-			{/* <MuiLogo /> */}
+			<Logo />
 			<List sx={{ "--ListItem-radius": "8px", "--List-gap": "12px" }}>
 				<ListItem>
 					<Link to={"/"}>

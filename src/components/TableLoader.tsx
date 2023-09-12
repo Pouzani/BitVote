@@ -1,7 +1,7 @@
 import ContentLoader from "react-content-loader";
 
 const TableLoader = () => {
-    const rows = [1,2,3,4,5,6,7]
+    const rows = [1,2,3,4,5,6,7,8,9,10,11,12]
 	return (
         rows.map((index) => (
 		<tr key={index}>

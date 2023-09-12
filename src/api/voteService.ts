@@ -3,7 +3,6 @@ import { Vote } from "../model/vote";
 
 
 export async function submitVote(vote:Vote) {
-    console.log(vote)
     try {
         const response = await axios.post(`/votes`,vote);
         return response.data;
@@ -12,4 +11,14 @@ export async function submitVote(vote:Vote) {
         throw error;
     }
     
+}
+
+export async function getVotes(coinId:string) {
+    try{
+        const response = await axios.get(`/votes/${coinId}`);
+        return response.data;
+    } catch (error) {
+        console.log(error);
+        throw error;
+    }
 }
