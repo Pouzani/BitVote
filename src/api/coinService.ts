@@ -16,7 +16,7 @@ export async function getAllCoins(page: number, size: number) {
 	}
 }
 
-export async function getCoin(id: string) {
+export async function getCoinById(id: string) {
 	try {
 		const response = await axios.get(`/coins/${id}`);
 		return response.data;

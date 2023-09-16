@@ -13,5 +13,5 @@ export interface Votes{
     votes: Vote[];
     upVotes: number;
     downVotes: number;
-    totlaVotes: number;
+    totalVotes: number;
 }

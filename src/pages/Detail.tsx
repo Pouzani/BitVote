@@ -1,10 +1,9 @@
-import { useParams } from "react-router-dom";
-import { getVotes } from "../api/voteService";
-import useGetVotes from "../hooks/useGetVotes";
-import { Votes } from "../model/vote";
-import CoinCard from "../components/CoinCard";
 
-const Test = () => {
+import useGetVotes from "../hooks/useGetVotes";
+import CoinCard from "../components/CoinCard";
+import { useParams } from "react-router-dom";
+
+const Detail = () => {
 	let { coinId } = useParams();
 	if (coinId === undefined) {
 		coinId = "";
@@ -18,4 +17,4 @@ const Test = () => {
 	);
 };
 
-export default Test;
+export default Detail;

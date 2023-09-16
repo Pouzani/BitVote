@@ -5,12 +5,13 @@ import TableLoader from "../components/TableLoader";
 import Pagination from "../components/Pagination";
 import VoteModal from "../components/VoteModal";
 import useGetCoins from "../hooks/useGetCoins";
+import { Link, redirect } from "react-router-dom";
 
 const Home = () => {
 	const [currentPage, setCurrentPage] = useState<number>(1);
 	const [rowHoverd, setRowHoverd] = useState<number>(-1);
 
-	const {coins,loading,error} = useGetCoins(currentPage,12);
+	const { coins, loading, error } = useGetCoins(currentPage, 12);
 
 	const onPageChange = (page: number) => {
 		setCurrentPage(page);
@@ -54,17 +55,24 @@ const Home = () => {
 									<td className="hidden lg:table-cell">
 										{coin.market_cap_rank}
 									</td>
-									<td className="flex items-center gap-2">
-										<img src={coin.image} className="w-8" />
-										<span
-											className={
-												rowHoverd === index
-													? "underline"
-													: ""
-											}
-										>
-											{coin.name}
-										</span>
+									<td>
+										<Link to={`detail/${coin.id}`}>
+											<div className="flex items-center gap-2">
+												<img
+													src={coin.image}
+													className="w-8"
+												/>
+												<span
+													className={
+														rowHoverd === index
+															? "underline"
+															: ""
+													}
+												>
+													{coin.name}
+												</span>
+											</div>
+										</Link>
 									</td>
 									<td>{coin.current_price}</td>
 									{coin.price_change_percentage_24h >= 0 ? (
@@ -102,7 +110,7 @@ const Home = () => {
 	);
 };
 
-export const VoteButton = ({ coin }:{coin:Coin}) => {
+export const VoteButton = ({ coin }: { coin: Coin }) => {
 	const [hidden, setHidden] = useState<boolean>(true);
 	const showModal = () => {
 		hidden ? setHidden(false) : setHidden(true);
