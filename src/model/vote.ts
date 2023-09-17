@@ -14,4 +14,6 @@ export interface Votes{
     upVotes: number;
     downVotes: number;
     totalVotes: number;
+    upVotesPercentageAvg: number;
+    downVotesPercentageAvg: number;
 }
