@@ -9,7 +9,9 @@ function useGetVotes(coinId: string) {
 		votes: [],
 		upVotes: 0,
 		downVotes: 0,
-		totlaVotes: 0,
+		totalVotes: 0,
+		upVotesPercentageAvg: 0,
+		downVotesPercentageAvg: 0,
 	});
 
 	const [loading, setLoading] = useState<boolean>(true);

@@ -12,7 +12,7 @@ const Detail = () => {
 	console.log(coin);
 	return (
 		<div className="flex flex-col items-center justify-center w-full">
-			<CoinCard vote={votes} coin={coin} />
+			<CoinCard vote={votes} coin={coin} loading={loading} />
 		</div>
 	);
 };
