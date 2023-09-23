@@ -8,7 +8,7 @@ interface CoinCardProps {
 	vote: Votes;
 	loading: boolean;
 }
-import coinExemple from "../utils/bitcoin.json";
+import coinExemple from "../mock/bitcoin.json";
 
 const CoinCard = ({ coin, vote, loading }: CoinCardProps) => {
 	if (loading) {

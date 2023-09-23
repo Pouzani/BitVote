@@ -2,9 +2,10 @@ import { useCallback, useEffect, useState } from "react";
 import { Votes } from "../model/vote";
 import { getVotesByCoin } from "../api/voteService";
 import { CoinDetail } from "../model/coin";
-import { getCoinById } from "../api/coinService";
+import { getCoinById, getCoinMarketData } from "../api/coinService";
+import exempleMarketData from "../mock/market_data.json";
 
-function useGetVotes(coinId: string) {
+function useGetVotes(coinId: string, days: number) {
 	const [votes, setVotes] = useState<Votes>({
 		votes: [],
 		upVotes: 0,
@@ -16,6 +17,11 @@ function useGetVotes(coinId: string) {
 
 	const [loading, setLoading] = useState<boolean>(true);
 	const [error, setError] = useState<boolean>(false);
+	const [marketData, setMarketData] = useState<typeof exempleMarketData>({
+		prices: [],
+		market_caps: [],
+		total_volumes: [],
+	});
 	const [coin, setCoin] = useState<CoinDetail>({
 		id: "",
 		symbol: "",
@@ -50,10 +56,8 @@ function useGetVotes(coinId: string) {
 
 	const getVotes = useCallback(async () => {
 		try {
-			setLoading(true);
 			const votes = await getVotesByCoin(coinId);
 			setVotes(votes);
-			setLoading(false);
 		} catch (error) {
 			setError(true);
 		}
@@ -70,12 +74,24 @@ function useGetVotes(coinId: string) {
 		}
 	}, [coinId]);
 
+	const getMarketData = useCallback(async () => {
+		try {
+			setLoading(true);
+			const marketData = await getCoinMarketData(coinId,days);
+			setMarketData(marketData);
+			setLoading(false);
+		} catch (error) {
+			setError(true);
+		}
+	}, [coinId, days]);
+
 	useEffect(() => {
 		getVotes();
 		getCoin();
-	}, [getVotes, getCoin]);
+		getMarketData();
+	}, [getVotes, getCoin, getMarketData]);
 
-	return { votes, coin, loading, error };
+	return { votes, coin, marketData, loading, error };
 }
 
 export default useGetVotes;
