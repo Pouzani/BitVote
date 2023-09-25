@@ -1,6 +1,6 @@
 package com.bitvote.project.security.config;
 
-import com.bitvote.project.security.user.UserRepository;
+import com.bitvote.project.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

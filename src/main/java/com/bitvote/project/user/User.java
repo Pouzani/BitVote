@@ -1,8 +1,11 @@
-package com.bitvote.project.security.user;
+package com.bitvote.project.user;
 
+import com.bitvote.project.security.password.validation.ValidPassword;
 import jakarta.persistence.*;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -40,6 +43,8 @@ public class User implements UserDetails {
     private String username;
 
     @NotBlank(message = "password must not be empty")
+    @Size(min = 8, message = "password must be at least 8 characters long")
+    @ValidPassword
     @Column(nullable = false)
     private String password;
 

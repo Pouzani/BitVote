@@ -1,8 +1,8 @@
 package com.bitvote.project.security.auth;
 
 import com.bitvote.project.security.config.JwtService;
-import com.bitvote.project.security.user.User;
-import com.bitvote.project.security.user.UserRepository;
+import com.bitvote.project.user.User;
+import com.bitvote.project.user.UserRepository;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;

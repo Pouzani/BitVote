@@ -1,6 +1,6 @@
 package com.bitvote.project.security.auth;
 
-import com.bitvote.project.security.user.User;
+import com.bitvote.project.user.User;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

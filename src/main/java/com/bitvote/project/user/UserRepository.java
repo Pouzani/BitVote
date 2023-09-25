@@ -1,4 +1,4 @@
-package com.bitvote.project.security.user;
+package com.bitvote.project.user;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
