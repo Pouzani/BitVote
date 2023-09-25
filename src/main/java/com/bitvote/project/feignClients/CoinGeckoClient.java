@@ -15,9 +15,13 @@ import java.util.Map;
 )
 public interface CoinGeckoClient {
     @GetMapping(path = "/coins/markets?vs_currency=usd&order=market_cap_desc&sparkline=false")
-    List<Coin> getCoins(@RequestParam("per_page") Integer size,
+    List<Object> getCoins(@RequestParam("per_page") Integer size,
                         @RequestParam("page") Integer page);
 
     @GetMapping(path = "/coins/{id}")
     Map<String,Object> getCoin(@PathVariable("id") String id);
+
+    @GetMapping(path = "/coins/{id}/market_chart?vs_currency=usd&interval=daily")
+    Map<String,Object> getCoinMarketChart(@PathVariable("id") String id,
+                                          @RequestParam("days") Integer days);
 }

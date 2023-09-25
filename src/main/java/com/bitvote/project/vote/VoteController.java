@@ -1,6 +1,5 @@
 package com.bitvote.project.vote;
 
-import com.bitvote.project.vote.Responses.VotesResponse;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -18,9 +17,8 @@ public class VoteController {
         return voteService.getVotesByCoinId(coinId);
     }
 
-    @PostMapping(path = "{coinId}/{voteType}")
-    public void addVote(@PathVariable("coinId") String coinId,
-                        @PathVariable("voteType") VoteEnum voteType) {
-        voteService.addVote(coinId, voteType);
+    @PostMapping(path = "")
+    public Vote addVote(@RequestBody VoteRequest voteRequest) {
+        return voteService.addVote(voteRequest.coinId(), voteRequest.voteType(), voteRequest.votePercentage());
     }
 }

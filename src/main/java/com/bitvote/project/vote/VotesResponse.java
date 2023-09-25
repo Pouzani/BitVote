@@ -1,4 +1,4 @@
-package com.bitvote.project.vote.Responses;
+package com.bitvote.project.vote;
 
 import com.bitvote.project.vote.Vote;
 import com.bitvote.project.vote.VoteEnum;
@@ -13,6 +13,8 @@ public class VotesResponse{
     private List<Vote> votes;
     private Long upVotes;
     private Long downVotes;
+    private Double upVotesPercentageAvg;
+    private Double downVotesPercentageAvg;
     private Integer totalVotes;
 
 }

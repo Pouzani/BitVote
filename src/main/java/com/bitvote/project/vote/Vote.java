@@ -19,5 +19,5 @@ public class Vote {
     private Long id;
     private String coinId;
     private VoteEnum voteType;
-    private Float votePercentage;
+    private Double votePercentage;
 }

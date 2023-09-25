@@ -1,6 +1,7 @@
 package com.bitvote.project.feignClients;
 
 import com.bitvote.project.coin.Coin;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,11 +16,18 @@ public class CoinGeckoService {
         this.coinGeckoClient = coinGeckoClient;
     }
 
-    public List<Coin> getCoins(Integer size, Integer page){
+    @Cacheable(value = "coins")
+    public List<Object> getCoins(Integer size, Integer page){
         return coinGeckoClient.getCoins(size, page);
     }
 
+    @Cacheable(value = "coin")
     public Map<String,Object> getCoin(String id){
         return coinGeckoClient.getCoin(id);
+    }
+
+    @Cacheable(value = "coinMarketChart")
+    public Map<String,Object> getCoinMarketChart(String id, Integer days){
+        return coinGeckoClient.getCoinMarketChart(id, days);
     }
 }

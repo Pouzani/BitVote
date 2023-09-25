@@ -21,4 +21,6 @@ public class Coin {
     private String price_change_percentage_24h;
     private String market_cap_change_percentage_24h;
     private String market_cap_change_24h;
+    private String total_volume;
+    private boolean voted = false;
 }

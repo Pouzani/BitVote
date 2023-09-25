@@ -1,11 +1,9 @@
 package com.bitvote.project.vote;
 
 import com.bitvote.project.vote.Mapper.VotesMapper;
-import com.bitvote.project.vote.Responses.VotesResponse;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class VoteService {
@@ -16,10 +14,11 @@ public class VoteService {
         this.voteRepository = voteRepository;
     }
 
-    public void addVote(String coinId, VoteEnum voteType) {
-        voteRepository.save(Vote.builder()
+    public Vote addVote(String coinId, VoteEnum voteType, Double votePercentage) {
+        return voteRepository.save(Vote.builder()
                 .coinId(coinId)
                 .voteType(voteType)
+                .votePercentage(votePercentage)
                 .build());
     }
 
