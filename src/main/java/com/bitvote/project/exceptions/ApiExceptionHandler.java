@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import java.io.IOException;
 import java.time.ZonedDateTime;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -32,7 +33,7 @@ public class ApiExceptionHandler{
     @ExceptionHandler(value = Exception.class)
     public ResponseEntity<Object> handleApiRequestException(Exception e){
         HttpStatus httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
-        ApiException apiException = new ApiException(e.getClass().getName(),httpStatus, ZonedDateTime.now());
+        ApiException apiException = new ApiException(e.getMessage(),httpStatus, ZonedDateTime.now());
         return new ResponseEntity<>(apiException, httpStatus);
     }
     @ExceptionHandler(value = UserNotFoundException.class)

@@ -1,6 +1,7 @@
 package com.bitvote.project.user;
 
 import com.bitvote.project.security.password.validation.ValidPassword;
+import com.bitvote.project.security.token.Token;
 import jakarta.persistence.*;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
@@ -33,17 +34,15 @@ public class User implements UserDetails {
     private Long id;
 
     @Column(nullable = false)
-
-    @NotBlank(message = "email must not be empty")
-    @Email(regexp = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$", message = "email must be valid")
+    @NotBlank(message = "Email must not be empty")
+    @Email(regexp = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$", message = "Email must be valid")
     private String email;
 
-    @NotBlank(message = "username must not be empty")
+    @NotBlank(message = "Username must not be empty")
     @Column(nullable = false)
     private String username;
 
-    @NotBlank(message = "password must not be empty")
-    @Size(min = 8, message = "password must be at least 8 characters long")
+    @NotBlank(message = "Password must not be empty")
     @ValidPassword
     @Column(nullable = false)
     private String password;
@@ -53,6 +52,19 @@ public class User implements UserDetails {
     private String imageUrl;
     private Integer age;
     private String phone;
+
+    @OneToMany(mappedBy = "user")
+    private List<Token> tokens;
+
+    @Override
+    public String getPassword() {
+        return password;
+    }
+
+    @Override
+    public String getUsername() {
+        return username;
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

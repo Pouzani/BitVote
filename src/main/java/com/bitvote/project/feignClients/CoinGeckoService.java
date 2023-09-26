@@ -1,6 +1,5 @@
 package com.bitvote.project.feignClients;
 
-import com.bitvote.project.coin.Coin;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
