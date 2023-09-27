@@ -5,11 +5,13 @@ import com.bitvote.project.security.config.JwtService;
 import com.bitvote.project.security.token.Token;
 import com.bitvote.project.security.token.TokenRepository;
 import com.bitvote.project.security.token.TokenType;
+import com.bitvote.project.user.Role;
 import com.bitvote.project.user.User;
 import com.bitvote.project.user.UserRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -29,18 +31,15 @@ public class AuthenticationService {
     private final UserRepository userRepository;
     private final TokenRepository tokenRepository;
 
-    @Transactional
-    public AuthenticationResponse register(User user){
+    public AuthenticationResponse register(RegisterRequest request){
         var authUser = User.builder()
-                .username(user.getUsername())
-                .password(passwordEncoder.encode(user.getPassword()))
-                .role(user.getRole())
-                .age(user.getAge())
-                .email(user.getEmail())
-                .phone(user.getPhone())
-                .imageUrl(user.getImageUrl())
+                .username(request.username())
+                .password(passwordEncoder.encode(request.password()))
+                .age(request.age())
+                .email(request.email())
+                .phone(request.phone())
+                .imageUrl(request.imageUrl())
                 .build();
-
         var savedUser = userRepository.save(authUser);
         var accessToken = jwtService.generateToken(savedUser);
         var refreshToken = jwtService.generateRefreshToken(savedUser);

@@ -34,20 +34,17 @@ public class User implements UserDetails {
     private Long id;
 
     @Column(nullable = false)
-    @NotBlank(message = "Email must not be empty")
-    @Email(regexp = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$", message = "Email must be valid")
     private String email;
 
-    @NotBlank(message = "Username must not be empty")
     @Column(nullable = false)
     private String username;
 
-    @NotBlank(message = "Password must not be empty")
-    @ValidPassword
     @Column(nullable = false)
     private String password;
 
     @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    @Builder.Default
     private Role role = Role.USER;
     private String imageUrl;
     private Integer age;
