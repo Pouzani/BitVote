@@ -12,8 +12,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.logout.LogoutHandler;
 
-import static org.springframework.http.HttpMethod.GET;
-import static org.springframework.http.HttpMethod.POST;
+import static org.springframework.http.HttpMethod.*;
 
 @Configuration
 @EnableWebSecurity
@@ -31,9 +30,13 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/api/v1/auth/**","/api/v1/coins/**").permitAll()
-                        .requestMatchers(GET, "/api/v1/votes/**").permitAll())
+                        .requestMatchers(GET, "/api/v1/votes/**").permitAll()
+                        .requestMatchers(GET, "/api/v1/forum/**").permitAll())
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(POST,"/api/v1/votes/**").hasAnyAuthority("USER","ADMIN")
+                        .requestMatchers(POST,"/api/v1/forum/**").hasAnyAuthority("USER","ADMIN")
+                        .requestMatchers(PUT,"/api/v1/forum/**").hasAnyAuthority("USER","ADMIN")
+                        .requestMatchers(DELETE,"/api/v1/forum/**").hasAnyAuthority("USER","ADMIN")
                         .requestMatchers("/api/v1/user/**").hasAnyAuthority("ADMIN")
                         .anyRequest().authenticated())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

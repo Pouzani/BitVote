@@ -1,5 +1,6 @@
 package com.bitvote.project.user;
 
+import com.bitvote.project.forum.Article;
 import com.bitvote.project.security.password.validation.ValidPassword;
 import com.bitvote.project.security.token.Token;
 import jakarta.persistence.*;
@@ -52,6 +53,9 @@ public class User implements UserDetails {
 
     @OneToMany(mappedBy = "user")
     private List<Token> tokens;
+
+    @OneToMany(mappedBy = "user")
+    private List<Article> articles;
 
     @Override
     public String getPassword() {
