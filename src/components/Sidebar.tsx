@@ -122,7 +122,9 @@ export default function Sidebar() {
 					</Link>
 				</ListItem>
 			</List>
-			<Avatar variant="outlined" src="" />
+			<Link to={"/logout"}>
+				<Avatar variant="outlined" src="" />
+			</Link>
 		</Sheet>
 	);
 }

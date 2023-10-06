@@ -5,6 +5,8 @@ import Root from "./root";
 import Detail from "../pages/Detail";
 import Login from "../pages/Login";
 import { useAuth } from "../auth/AuthProvider";
+import { ProtectedRoute } from "./ProtectedRoute";
+import Logout from "../pages/Logout";
 
 
 const Routes = () => {
@@ -25,7 +27,15 @@ const Routes = () => {
         }
 	];
 
-	const routesForPrivate = [];
+	const routesForPrivate = [
+        {
+            path: "/",
+            element: <ProtectedRoute />,
+            children: [
+                { path: "/logout", element: <Logout /> },
+            ],
+        }
+    ];
 
 	const router = createBrowserRouter([
 		...routesForPublic,

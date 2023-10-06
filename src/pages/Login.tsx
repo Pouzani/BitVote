@@ -66,13 +66,26 @@ function ColorSchemeToggle({ onClick, ...props }: IconButtonProps) {
 	);
 }
 
+interface ErrorMessages {
+	message?: string;
+	messages?: {
+		username?: string;
+		password?: string;
+	};
+}
+
 export default function Login() {
 	const { setAccessToken, accessToken } = useAuth();
+	const [error, setError] = React.useState(false);
+	const [errorMessage, setErrorMessage] = React.useState<ErrorMessages>({
+		message: "",
+	});
+	const [loading, setLoading] = React.useState(false);
 	const navigate = useNavigate();
 
-    if (accessToken) {
-        return <Navigate to="/" />;
-    }
+	if (accessToken) {
+		return <Navigate to="/" />;
+	}
 
 	const handleLogin = async (event: React.FormEvent<SignInFormElement>) => {
 		event.preventDefault();
@@ -82,14 +95,17 @@ export default function Login() {
 			password: formElements.password.value,
 			persistent: formElements.persistent.checked,
 		};
-        try{
-            const response = await login(data.username, data.password);
-            setAccessToken(response.accessToken);
-            navigate("/", {replace: true});
-        }
-        catch(e){
-            console.log(e);
-        }
+		try {
+			setLoading(true);
+			const response = await login(data.username, data.password);
+			setAccessToken(response.accessToken);
+			navigate("/", { replace: true });
+			setLoading(false);
+		} catch (e: any) {
+			setLoading(false);
+			setError(true);
+			setErrorMessage(e.response.data);
+		}
 	};
 
 	return (
@@ -202,15 +218,50 @@ export default function Login() {
 							</Stack>
 						</Stack>
 						<Stack gap={4} sx={{ mt: 2 }}>
-							<form
-								onSubmit={handleLogin}
-							>
-								<FormControl required>
+							{error && errorMessage.message && (
+								<Typography level="body-sm" color="danger">
+									{errorMessage.message}
+								</Typography>
+							)}
+							<form onSubmit={handleLogin}>
+								<FormControl
+									required
+									error={
+										errorMessage.message ||
+										(errorMessage.messages &&
+											errorMessage.messages.username)
+									}
+								>
 									<FormLabel>Username</FormLabel>
+									{errorMessage.messages &&
+										errorMessage.messages.username && (
+											<Typography
+												level="body-xs"
+												color="danger"
+											>
+												{errorMessage.messages.username}
+											</Typography>
+										)}
 									<Input type="username" name="username" />
 								</FormControl>
-								<FormControl required>
+								<FormControl
+									required
+									error={
+										errorMessage.message ||
+										(errorMessage.messages &&
+											errorMessage.messages.password)
+									}
+								>
 									<FormLabel>Password</FormLabel>
+									{errorMessage.messages &&
+										errorMessage.messages.password && (
+											<Typography
+												level="body-xs"
+												color="danger"
+											>
+												{errorMessage.messages.password}
+											</Typography>
+										)}
 									<Input type="password" name="password" />
 								</FormControl>
 								<Stack gap={4} sx={{ mt: 2 }}>
