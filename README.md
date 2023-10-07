@@ -60,9 +60,11 @@ Outline the technologies, libraries, and frameworks used in your project:
 
 2. **Maven:** Spring Boot projects are typically managed using Maven. Install Maven if you haven't already. You can download it from the [official Maven website](https://maven.apache.org/download.cgi) and follow the installation instructions.
 
-3. **Node.js and npm:** Install Node.js and npm (Node Package Manager) on your system. You can download them from the [official Node.js website](https://nodejs.org/). These are required to build and run the React front end.
+3. **Docker:** Install Docker on your system. You can download Docker from the [official Docker website](https://docs.docker.com/get-docker/) and follow the installation instructions.
 
-4. **Vite:** Vite is a front-end build tool used in your project. Install Vite globally using npm:
+4. **Node.js and npm:** Install Node.js and npm (Node Package Manager) on your system. You can download them from the [official Node.js website](https://nodejs.org/). These are required to build and run the React front end.
+
+5. **Vite:** Vite is a front-end build tool used in your project. Install Vite globally using npm:
 
 ```bash
 npm install -g create-vite
