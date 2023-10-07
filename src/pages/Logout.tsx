@@ -3,11 +3,12 @@ import { useAuth } from "../auth/AuthProvider";
 import { useEffect } from "react";
 
 const Logout = () => {
-  const { setAccessToken } = useAuth();
+  const { setAccessToken, setRefreshToken } = useAuth();
   const navigate = useNavigate();
 
   const handleLogout = () => {
     setAccessToken();
+    setRefreshToken();
     navigate("/", { replace: true });
   };
 

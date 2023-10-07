@@ -76,6 +76,7 @@ interface ErrorMessages {
 
 export default function Login() {
 	const { setAccessToken, accessToken } = useAuth();
+    const { setRefreshToken, refreshToken } = useAuth();
 	const [error, setError] = React.useState(false);
 	const [errorMessage, setErrorMessage] = React.useState<ErrorMessages>({
 		message: "",
@@ -99,6 +100,7 @@ export default function Login() {
 			setLoading(true);
 			const response = await login(data.username, data.password);
 			setAccessToken(response.accessToken);
+            setRefreshToken(response.refreshToken);
 			navigate("/", { replace: true });
 			setLoading(false);
 		} catch (e: any) {
