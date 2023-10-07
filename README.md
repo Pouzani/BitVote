@@ -94,10 +94,10 @@ git clone https://github.com/Pouzani/BitVote.git
 cd Back-end
 
 # Build the Docker containers
-docker-compose build
+docker compose build
 
 # Start the Docker containers
-docker-compose up
+docker compose up
 ```
 
 ## Usage
