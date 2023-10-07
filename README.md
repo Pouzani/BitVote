@@ -11,8 +11,6 @@ BitVote is a web application that allows users to predict the percentage change 
 - [Installation](#installation)
 - [Usage](#usage)
 - [Forum](#forum)
-- [Contributing](#contributing)
-- [License](#license)
 
 ## Project Overview
 
