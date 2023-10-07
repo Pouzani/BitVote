@@ -10,6 +10,8 @@ import Logout from "../pages/Logout";
 import Signup from "../pages/Signup";
 
 
+/* The `Routes` component is responsible for defining the routes of the application using the
+`react-router-dom` library. */
 const Routes = () => {
 
 	const routesForPublic = [

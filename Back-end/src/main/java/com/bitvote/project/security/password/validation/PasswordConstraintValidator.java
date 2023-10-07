@@ -12,6 +12,17 @@ public class PasswordConstraintValidator implements ConstraintValidator<ValidPas
     public void initialize(ValidPassword arg0) {
     }
 
+    /**
+     * The isValid function is used to validate the password.
+     *
+     *
+     * @param String password Get the password from the form
+     * @param ConstraintValidatorContext context Build the error message
+     *
+     * @return True if the password is valid, and false otherwise
+     *
+     * @docauthor Trelent
+     */
     @Override
     public boolean isValid(String password, ConstraintValidatorContext context) {
         PasswordValidator validator = new PasswordValidator(Arrays.asList(

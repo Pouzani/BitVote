@@ -26,6 +26,18 @@ public class SecurityConfig {
     private final LogoutService logoutHandler;
     private final CorsConfig corsConfigurationSource;
 
+    /**
+     * The securityFilterChain function is a bean definition that creates a Spring Security Filter Chain.
+     * The filter chain is used to apply security filters to incoming requests.
+     * In this case, the filter chain applies the JWT Authentication Filter and CORS configuration before any other filters are applied.
+
+     *
+     * @param HttpSecurity http Configure the security filter chain
+     *
+     * @return A securityfilterchain, which is a collection of filters that are used to secure the application
+     *
+     * @docauthor Trelent
+     */
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 

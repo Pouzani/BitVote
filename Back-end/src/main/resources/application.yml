@@ -37,5 +37,7 @@ application:
         expiration: 10800000 # 3 hours
         refresh-token:
           expiration: 604800000 # 7 days
+      cors:
+        allowed-origins: http://localhost:8000
 
 

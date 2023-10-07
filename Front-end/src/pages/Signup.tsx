@@ -19,7 +19,7 @@ import BadgeRoundedIcon from "@mui/icons-material/BadgeRounded";
 import { useAuth } from "../auth/AuthProvider";
 import { Navigate, useNavigate, Link as RouterLink } from "react-router-dom";
 import { login, register } from "../api/authService";
-import User, { RegisterRequest } from "../model/user";
+import { RegisterRequest } from "../model/user";
 
 interface FormElements extends HTMLFormControlsCollection {
 	email: HTMLInputElement;

@@ -18,6 +18,9 @@ public interface CoinGeckoClient {
     List<Object> getCoins(@RequestParam("per_page") Integer size,
                         @RequestParam("page") Integer page);
 
+    /**
+     *
+     */
     @GetMapping(path = "/coins/{id}")
     Map<String,Object> getCoin(@PathVariable("id") String id);
 

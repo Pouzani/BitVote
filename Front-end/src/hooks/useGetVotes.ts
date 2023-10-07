@@ -5,6 +5,17 @@ import { CoinDetail } from "../model/coin";
 import { getCoinById, getCoinMarketData } from "../api/coinService";
 import exempleMarketData from "../mock/market_data.json";
 
+/**
+ * The function `useGetVotes` is a custom hook in TypeScript that fetches votes, coin details, and
+ * market data for a given coin ID and number of days, and returns the fetched data along with loading
+ * and error states.
+ * @param {string} coinId - The coinId parameter is a string that represents the unique identifier of a
+ * cryptocurrency coin. It is used to fetch data related to a specific coin, such as votes, market
+ * data, and other details.
+ * @param {number} days - The "days" parameter is the number of days for which you want to retrieve
+ * market data for a specific coin.
+ * @returns The function `useGetVotes` returns an object with the following properties:
+ */
 function useGetVotes(coinId: string, days: number) {
 	const [votes, setVotes] = useState<Votes>({
 		votes: [],

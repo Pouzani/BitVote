@@ -26,6 +26,18 @@ public class UserService {
         return userRepository.findByUsername(username).map(userDTOMapper).orElseThrow();
     }
 
+    /**
+     * The searchUsers function takes in a string and searches the database for users with usernames or emails that contain
+     * the search string. It returns a list of UserResponse objects, which are DTOs containing only information about
+     * users that is safe to share publicly. The function throws an exception if no results are found.
+
+     *
+     * @param String search Search for a user by username or email
+     *
+     * @return A list of userresponse objects
+     *
+     * @docauthor Trelent
+     */
     public List<UserResponse> searchUsers(String search){
         return userRepository.findAllByUsernameContainingIgnoreCaseOrEmailContainingIgnoreCase(search,search)
                 .orElseThrow().stream().map(userDTOMapper).toList();
