@@ -17,13 +17,16 @@ import DarkModeRoundedIcon from "@mui/icons-material/DarkModeRounded";
 import LightModeRoundedIcon from "@mui/icons-material/LightModeRounded";
 import BadgeRoundedIcon from "@mui/icons-material/BadgeRounded";
 import { useAuth } from "../auth/AuthProvider";
-import { Navigate, useNavigate } from "react-router-dom";
-import { login } from "../api/authService";
-import { Link as RouterLink } from "react-router-dom";
+import { Navigate, useNavigate, Link as RouterLink } from "react-router-dom";
+import { login, register } from "../api/authService";
+import User, { RegisterRequest } from "../model/user";
 
 interface FormElements extends HTMLFormControlsCollection {
 	email: HTMLInputElement;
 	password: HTMLInputElement;
+	username: HTMLInputElement;
+	age: HTMLInputElement;
+	phone: HTMLInputElement;
 	persistent: HTMLInputElement;
 }
 interface SignInFormElement extends HTMLFormElement {
@@ -74,14 +77,21 @@ interface ErrorMessages {
 		password?: string;
 	};
 }
+function splitTextByPeriod(text: string): string[] {
+	return text
+		.split(".")
+		.map((requirement) => requirement.trim())
+		.slice(0, -1);
+}
 
-export default function Login() {
+export default function Signup() {
 	const { setAccessToken, accessToken } = useAuth();
-    const { setRefreshToken, refreshToken } = useAuth();
+	const { setRefreshToken, refreshToken } = useAuth();
 	const [error, setError] = React.useState(false);
 	const [errorMessage, setErrorMessage] = React.useState<ErrorMessages>({
 		message: "",
 	});
+	const [requirements, setRequirements] = React.useState<string[]>([]);
 	const [loading, setLoading] = React.useState(false);
 	const navigate = useNavigate();
 
@@ -89,28 +99,38 @@ export default function Login() {
 		return <Navigate to="/" />;
 	}
 
-	const handleLogin = async (event: React.FormEvent<SignInFormElement>) => {
+	const handleSignup = async (event: React.FormEvent<SignInFormElement>) => {
 		event.preventDefault();
 		const formElements = event.currentTarget.elements;
-		const data = {
+		const data: RegisterRequest = {
 			username: formElements.username.value,
 			password: formElements.password.value,
-			persistent: formElements.persistent.checked,
+			email: formElements.email.value,
+			role: "USER",
+			age: formElements.age.value,
+			phone: formElements.phone.value,
 		};
+		const persistance = formElements.persistent.value;
 		try {
 			setLoading(true);
-			const response = await login(data.username, data.password);
+			const response = await register(data);
 			setAccessToken(response.accessToken);
-            data.persistent ? setRefreshToken(response.refreshToken) : setRefreshToken("");
+			persistance
+				? setRefreshToken(response.refreshToken)
+				: setRefreshToken("");
 			localStorage.setItem("username", response.username);
-            localStorage.setItem("user_role", response.role);
-            localStorage.setItem("user_id", response.id);
+			localStorage.setItem("user_role", response.role);
+			localStorage.setItem("user_id", response.id);
 			navigate("/", { replace: true });
 			setLoading(false);
 		} catch (e: any) {
 			setLoading(false);
 			setError(true);
 			setErrorMessage(e.response.data);
+			e.response.data.messages?.password &&
+				setRequirements(
+					splitTextByPeriod(e.response.data.messages.password)
+				);
 		}
 	};
 
@@ -211,15 +231,14 @@ export default function Login() {
 					>
 						<Stack gap={4} sx={{ mb: 2 }}>
 							<Stack gap={1}>
-								<Typography level="h3">Sign in</Typography>
+								<Typography level="h3">Register</Typography>
 								<Typography level="body-sm">
-									New to BitVote?{" "}
-									<RouterLink to={"/signup"}>
-									<Link
-										level="title-sm"
-									>
-										Sign up!
-									</Link>
+									Welcome to Bitvote !
+								</Typography>
+								<Typography level="body-sm">
+									Already have an account?{" "}
+									<RouterLink to={"/login"}>
+										<Link>Log in</Link>
 									</RouterLink>
 								</Typography>
 							</Stack>
@@ -230,7 +249,7 @@ export default function Login() {
 									{errorMessage.message}
 								</Typography>
 							)}
-							<form onSubmit={handleLogin}>
+							<form onSubmit={handleSignup}>
 								<FormControl
 									required
 									error={
@@ -266,10 +285,72 @@ export default function Login() {
 												level="body-xs"
 												color="danger"
 											>
-												{errorMessage.messages.password}
+												{requirements.map(
+													(requirement) => (
+														<li>{requirement}</li>
+													)
+												)}
 											</Typography>
 										)}
 									<Input type="password" name="password" />
+								</FormControl>
+								<FormControl
+									required
+									error={
+										errorMessage.message ||
+										(errorMessage.messages &&
+											errorMessage.messages.email)
+									}
+								>
+									<FormLabel>Email</FormLabel>
+									{errorMessage.messages &&
+										errorMessage.messages.email && (
+											<Typography
+												level="body-xs"
+												color="danger"
+											>
+												{errorMessage.messages.email}
+											</Typography>
+										)}
+									<Input type="email" name="email" />
+								</FormControl>
+								<FormControl
+									error={
+										errorMessage.message ||
+										(errorMessage.messages &&
+											errorMessage.messages.age)
+									}
+								>
+									<FormLabel>Age</FormLabel>
+									{errorMessage.messages &&
+										errorMessage.messages.age && (
+											<Typography
+												level="body-xs"
+												color="danger"
+											>
+												{errorMessage.messages.age}
+											</Typography>
+										)}
+									<Input type="number" name="age" />
+								</FormControl>
+								<FormControl
+									error={
+										errorMessage.message ||
+										(errorMessage.messages &&
+											errorMessage.messages.age)
+									}
+								>
+									<FormLabel>Phone</FormLabel>
+									{errorMessage.messages &&
+										errorMessage.messages.phone && (
+											<Typography
+												level="body-xs"
+												color="danger"
+											>
+												{errorMessage.messages.phone}
+											</Typography>
+										)}
+									<Input type="number" name="phone" />
 								</FormControl>
 								<Stack gap={4} sx={{ mt: 2 }}>
 									<Box
@@ -292,7 +373,7 @@ export default function Login() {
 										</Link>
 									</Box>
 									<Button type="submit" fullWidth>
-										Log in
+										Sign up
 									</Button>
 								</Stack>
 							</form>

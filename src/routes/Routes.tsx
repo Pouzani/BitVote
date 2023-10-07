@@ -7,6 +7,7 @@ import Login from "../pages/Login";
 import { useAuth } from "../auth/AuthProvider";
 import { ProtectedRoute } from "./ProtectedRoute";
 import Logout from "../pages/Logout";
+import Signup from "../pages/Signup";
 
 
 const Routes = () => {
@@ -24,7 +25,11 @@ const Routes = () => {
         {
             path: "/login",
             element: <Login />,
-        }
+        },
+		{
+			path: "/signup",
+			element: <Signup />,
+		}
 	];
 
 	const routesForPrivate = [

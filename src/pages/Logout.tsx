@@ -9,6 +9,9 @@ const Logout = () => {
   const handleLogout = () => {
     setAccessToken();
     setRefreshToken();
+    localStorage.removeItem("username");
+    localStorage.removeItem("user_role");
+    localStorage.removeItem("user_id");
     navigate("/", { replace: true });
   };
 
