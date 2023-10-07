@@ -1,13 +1,8 @@
 package com.bitvote.project.user;
 
 import com.bitvote.project.forum.Article;
-import com.bitvote.project.security.password.validation.ValidPassword;
 import com.bitvote.project.security.token.Token;
 import jakarta.persistence.*;
-import jakarta.validation.Valid;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

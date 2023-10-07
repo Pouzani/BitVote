@@ -3,6 +3,7 @@ package com.bitvote.project.vote;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@CrossOrigin(origins = {"http://localhost:8000"})
 @RequestMapping("/api/v1/votes")
 public class VoteController {
 

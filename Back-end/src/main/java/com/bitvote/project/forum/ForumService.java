@@ -40,7 +40,6 @@ public class ForumService {
     }
 
     public List<ArticleResponse> searchArticles(String query){
-        System.out.println(query);
         return forumRepository.searchArticleByContentContainsIgnoreCaseOrTitleContainsIgnoreCaseOrderByIdDesc(query, query).orElse(new ArrayList<>()).stream().map(ArticleToArticleResponse::mapToArticleResponse).toList();
     }
 }

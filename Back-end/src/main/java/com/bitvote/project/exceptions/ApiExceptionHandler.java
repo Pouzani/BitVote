@@ -1,5 +1,6 @@
 package com.bitvote.project.exceptions;
 
+import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -53,6 +54,14 @@ public class ApiExceptionHandler{
     @ExceptionHandler(value = AccessDeniedException.class)
     public ResponseEntity<Object> handleApiRequestException(AccessDeniedException e){
         HttpStatus httpStatus = HttpStatus.FORBIDDEN;
+        ApiException apiException = new ApiException(e.getMessage(),httpStatus, ZonedDateTime.now());
+        return new ResponseEntity<>(apiException, httpStatus);
+    }
+
+    @ExceptionHandler(value = ExpiredJwtException.class)
+    public ResponseEntity<Object> handleApiRequestException(ExpiredJwtException e){
+        System.out.println("hh");
+        HttpStatus httpStatus = HttpStatus.UNAUTHORIZED;
         ApiException apiException = new ApiException(e.getMessage(),httpStatus, ZonedDateTime.now());
         return new ResponseEntity<>(apiException, httpStatus);
     }

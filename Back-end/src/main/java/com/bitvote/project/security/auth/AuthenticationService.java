@@ -44,7 +44,7 @@ public class AuthenticationService {
         var accessToken = jwtService.generateToken(savedUser);
         var refreshToken = jwtService.generateRefreshToken(savedUser);
         saveUserToken(savedUser,accessToken);
-        return new AuthenticationResponse(savedUser.getUsername(),accessToken,refreshToken,savedUser.getRole());
+        return new AuthenticationResponse(savedUser.getUsername(), savedUser.getId(), accessToken,refreshToken,savedUser.getRole());
     }
 
     public AuthenticationResponse login(@NotNull AuthenticationRequest request){
@@ -58,7 +58,7 @@ public class AuthenticationService {
         var accessToken = jwtService.generateToken(user);
         var refreshToken = jwtService.generateRefreshToken(user);
         saveUserToken(user,accessToken);
-        return new AuthenticationResponse(user.getUsername(),accessToken, refreshToken,user.getRole());
+        return new AuthenticationResponse(user.getUsername(),user.getId(),accessToken, refreshToken,user.getRole());
     }
 
     private void saveUserToken(User user, String token){
@@ -84,22 +84,15 @@ public class AuthenticationService {
         tokenRepository.saveAll(validUserTokens);
     }
 
-    public AuthenticationResponse refreshToken(HttpServletRequest request, HttpServletResponse response) throws IOException{
-        final String authHeader = request.getHeader("Authorization");
-        final String refreshToken;
-        final String username;
-        if (authHeader == null || !authHeader.startsWith("Bearer ")){
-            throw new BadCredentialsException("Invalid token");
-        }
-        refreshToken = authHeader.substring(7);
-        username = jwtService.extractUsername(refreshToken);
+    public AuthenticationResponse refreshToken(String token){
+        var username = jwtService.extractUsername(token);
         if (username != null){
             var storedUser = userRepository.findByUsername(username).orElseThrow(()->new UserNotFoundException("User with username: "+username+" not found"));
-            if(jwtService.isTokenValid(refreshToken,storedUser)){
+            if(jwtService.isTokenValid(token,storedUser)){
                 revokeAllUserTokens(storedUser);
                 var accessToken = jwtService.generateToken(storedUser);
                 saveUserToken(storedUser,accessToken);
-                return new AuthenticationResponse(storedUser.getUsername(),accessToken,refreshToken,storedUser.getRole());
+                return new AuthenticationResponse(storedUser.getUsername(),storedUser.getId(),accessToken,token,storedUser.getRole());
             }
         }
         return null;
