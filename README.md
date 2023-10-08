@@ -75,6 +75,9 @@ If applicable, provide detailed installation instructions for both the front end
 **Front-end:**
 
 ```bash
+# Clone the repository
+git clone https://github.com/Pouzani/BitVote.git
+
 # Change directory to the front-end folder
 cd Front-end
 
@@ -85,9 +88,6 @@ npm install
 **Back-end:**
 
 ```bash
-# Clone the repository
-git clone https://github.com/Pouzani/BitVote.git
-
 # Change directory to the back-end folder
 cd Back-end
 

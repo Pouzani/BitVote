@@ -5,9 +5,7 @@ import com.bitvote.project.security.config.JwtService;
 import com.bitvote.project.security.token.Token;
 import com.bitvote.project.security.token.TokenRepository;
 import com.bitvote.project.security.token.TokenType;
-import com.bitvote.project.user.Role;
-import com.bitvote.project.user.User;
-import com.bitvote.project.user.UserRepository;
+import com.bitvote.project.user.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.transaction.Transactional;
@@ -30,6 +28,7 @@ public class AuthenticationService {
     private final JwtService jwtService;
     private final UserRepository userRepository;
     private final TokenRepository tokenRepository;
+    private final UserDTOMapper userDTOMapper;
 
     /**
      * The register function is used to register a new user.
@@ -151,5 +150,9 @@ public class AuthenticationService {
             }
         }
         return null;
+    }
+
+    public UserResponse getCurrentUser(User user){
+        return userDTOMapper.apply(user);
     }
 }

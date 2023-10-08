@@ -6,15 +6,28 @@ import ListItem from "@mui/joy/ListItem";
 import ListItemButton from "@mui/joy/ListItemButton";
 import IconButton from "@mui/joy/IconButton";
 import Sheet from "@mui/joy/Sheet";
-import { AlertCircle, ArrowLeft, Home, Settings, Users } from "react-feather";
+import {
+	AlertCircle,
+	ArrowLeft,
+	Home,
+	LogIn,
+	Settings,
+	Users,
+} from "react-feather";
 // import MuiLogo from './MuiLogo';
 import { openSidebar, closeSidebar, Selected } from "../utils/navbarUtils";
 import { Link } from "react-router-dom";
 import Logo from "./Logo";
+import { useAuth } from "../auth/AuthProvider";
+import { useGetCurrent } from "../hooks/useAuth";
+import { Login } from "@mui/icons-material";
 // import ColorSchemeToggle from './ColorSchemeToggle';
 
 export default function Sidebar() {
 	const [selected, setSelected] = React.useState(Selected.HOME);
+	const { accessToken } = useAuth();
+	const { loading, error, currentUser } = useGetCurrent();
+
 	return (
 		<Sheet
 			className="FirstSidebar"
@@ -122,9 +135,20 @@ export default function Sidebar() {
 					</Link>
 				</ListItem>
 			</List>
-			<Link to={"/logout"}>
-				<Avatar variant="outlined" src="" />
-			</Link>
+			{accessToken ? (
+						<Link to={"/logout"}>
+							<Avatar
+								variant="outlined"
+								src={currentUser?.imageUrl}
+							/>
+						</Link>
+					) : (
+						<Link to={"/login"}>
+							<ListItemButton>
+								<LogIn />
+							</ListItemButton>
+						</Link>
+					)}
 		</Sheet>
 	);
 }

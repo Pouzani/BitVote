@@ -1,5 +1,7 @@
 import { Navigate, Outlet } from "react-router-dom";
 import { useAuth } from "../auth/AuthProvider";
+import Header from "../components/Header";
+import Sidebar from "../components/Sidebar";
 
 /**
  * The `ProtectedRoute` component checks if the user is authenticated and redirects to the login page
@@ -9,14 +11,20 @@ import { useAuth } from "../auth/AuthProvider";
  * the user is authenticated.
  */
 export const ProtectedRoute = () => {
-    const { accessToken } = useAuth();
-  
-    // Check if the user is authenticated
-    if (!accessToken) {
-      // If not authenticated, redirect to the login page
-      return <Navigate to="/login" />;
-    }
-  
-    // If authenticated, render the child routes
-    return <Outlet />;
-  };
+	const { accessToken } = useAuth();
+
+	// Check if the user is authenticated
+	if (!accessToken) {
+		// If not authenticated, redirect to the login page
+		return <Navigate to="/login" />;
+	}
+
+	// If authenticated, render the child routes
+	return (
+		<div className="flex w-full">
+			<Header />
+			<Sidebar />
+			<Outlet />
+		</div>
+	);
+};

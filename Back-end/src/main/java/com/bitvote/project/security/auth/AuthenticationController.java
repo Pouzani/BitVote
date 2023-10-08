@@ -1,16 +1,15 @@
 package com.bitvote.project.security.auth;
 
 import com.bitvote.project.user.User;
+import com.bitvote.project.user.UserResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 
@@ -33,5 +32,10 @@ public class AuthenticationController {
     @PostMapping("/refresh-token")
     public ResponseEntity<AuthenticationResponse> refreshToken(@RequestBody RefreshTokenRequest request){
         return ResponseEntity.ok(authenticationService.refreshToken(request.refreshToken()));
+    }
+
+    @GetMapping("/current")
+    public ResponseEntity<UserResponse> getCurrentUser(@AuthenticationPrincipal User user){
+        return ResponseEntity.ok(authenticationService.getCurrentUser(user));
     }
 }

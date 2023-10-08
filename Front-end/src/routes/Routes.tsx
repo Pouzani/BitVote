@@ -8,6 +8,7 @@ import { useAuth } from "../auth/AuthProvider";
 import { ProtectedRoute } from "./ProtectedRoute";
 import Logout from "../pages/Logout";
 import Signup from "../pages/Signup";
+import Account from "../pages/Account";
 
 
 /* The `Routes` component is responsible for defining the routes of the application using the
@@ -40,6 +41,7 @@ const Routes = () => {
             element: <ProtectedRoute />,
             children: [
                 { path: "/logout", element: <Logout /> },
+				{ path: "/account", element: <Account />}
             ],
         }
     ];

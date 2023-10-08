@@ -22,6 +22,8 @@ spring:
       time-to-live: 3600000
       cache-null-values: true
     type: redis
+  default:
+    user-img: "https://static.vecteezy.com/system/resources/previews/008/442/086/non_2x/illustration-of-human-icon-user-symbol-icon-modern-design-on-blank-background-free-vector.jpg"
 
 server:
     port: 8080

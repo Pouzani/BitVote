@@ -1,4 +1,4 @@
-import { RegisterRequest } from "../model/user";
+import User, { RegisterRequest } from "../model/user";
 import axios from "./axios";
 
 /**
@@ -49,6 +49,16 @@ export async function register(request: RegisterRequest) {
 export async function logout() {
     try {
         const response = await axios.get("/auth/logout");
+        return response.data;
+    } catch (error) {
+        console.log(error);
+        throw error;
+    }
+}
+
+export async function getCurrent(): Promise<User>{
+    try {
+        const response = await axios.get("/auth/current");
         return response.data;
     } catch (error) {
         console.log(error);
