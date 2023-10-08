@@ -56,7 +56,7 @@ Outline the technologies, libraries, and frameworks used in your project:
 
 1. **Java Development Kit (JDK):** You will need a compatible version (17 or higher) of JDK installed on your system. You can download the JDK from the [Oracle](https://www.oracle.com/java/technologies/javase-downloads.html) website or use an OpenJDK distribution.
 
-2. **Maven:** Spring Boot projects are typically managed using Maven. Install Maven if you haven't already. You can download it from the [official Maven website](https://maven.apache.org/download.cgi) and follow the installation instructions.
+2. **Maven:** Install Maven if you haven't already. You can download it from the [official Maven website](https://maven.apache.org/download.cgi) and follow the installation instructions.
 
 3. **Docker:** Install Docker on your system. You can download Docker from the [official Docker website](https://docs.docker.com/get-docker/) and follow the installation instructions.
 
