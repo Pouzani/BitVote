@@ -6,11 +6,20 @@ pipeline {
         dockerTool 'Docker'
     }
     stages {
+        stage('Change Working Directory') {
+            steps {
+                script {
+                    // Change the working directory to the 'backend' folder
+                    dir('Back-end') {
+                        // You are now in the 'back-end' folder
+                    }
+                }
+            }
+        }
 
         stage("test"){
             steps {
                 script {
-                    sh 'cd Back-end'
                     echo "testing the app ..."
                     sh 'mvn test'
                 }
