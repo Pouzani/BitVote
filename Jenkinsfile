@@ -12,6 +12,8 @@ pipeline {
                     // Change the working directory to the 'backend' folder
                     dir('Back-end') {
                         // You are now in the 'back-end' folder
+                        echo "testing the app ..."
+                        sh 'mvn test'
                     }
                 }
             }
