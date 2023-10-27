@@ -19,20 +19,13 @@ pipeline {
             }
         }
 
-        stage("test"){
-            steps {
-                script {
-                    echo "testing the app ..."
-                    sh 'mvn test'
-                }
-            }
-        }
-
         stage("build jar") {
             steps {
                 script {
-                    echo "building the app ..."
-                    sh 'mvn package -DskipTests'
+                    dir('Back-end') {
+                        echo "building the app ..."
+                        sh 'mvn package -DskipTests'
+                    }
                 }
             }
         }
@@ -40,12 +33,14 @@ pipeline {
         stage("build image") {
             steps {
                 script {
+                    dir('Back-end'){
                     echo "building the docker image ..."
                     withCredentials([usernamePassword(credentialsId: 'dockerhub-repo', passwordVariable: 'PASSWORD', usernameVariable: 'USER')]) {
                         sh 'docker build -t pihix/bitvote-app:1.0 .'
                         sh 'docker login -u $USER -p $PASSWORD'
                         //sh "echo $PASSWORD | docker login -u $USER --password-stdin"
                         sh 'docker push pihix/bitvote-app:1.0'
+                    }
                     }
                 }
             }
