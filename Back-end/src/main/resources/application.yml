@@ -2,9 +2,9 @@ spring:
   application:
     name: BitVote
   datasource:
-    username: 'postgres'
-    password: 'postgres'
-    url: 'jdbc:postgresql://localhost:5432/bitvote'
+    username: 'doadmin'
+    password: 'AVNS_BpTh1Kbr3pVFsd60olx'
+    url: 'jdbc:postgresql://db-postgresql-fra1-16186-do-user-14816902-0.c.db.ondigitalocean.com:25060/bitvote?sslmode=require'
   jpa:
     hibernate:
       ddl-auto: update

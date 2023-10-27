@@ -37,7 +37,7 @@ export async function useRegister(user:User){
     return { loading, error, accessToken, setAccessToken };
 }
 
-export async function useGetCurrent(){
+export function useGetCurrent(){
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState();
     const [currentUser, setCurrentUser] = useState<User>();
