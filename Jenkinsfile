@@ -10,6 +10,7 @@ pipeline {
         stage("test"){
             steps {
                 script {
+                    sh 'cd Back-end'
                     echo "testing the app ..."
                     sh 'mvn test'
                 }
