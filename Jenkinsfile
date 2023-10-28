@@ -50,19 +50,12 @@ pipeline {
             steps {
                 script {
                     echo "deploy the image ..."
-                    // Define the name of the previous Docker container
-                    def containerName = 'bitvote-container'
-
-                    // Stop the previous container if it's running
-                   // sh "ssh -o StrictHostKeyChecking=no ubuntu@13.39.82.122 docker stop ${containerName}"
-
-                    // Start the new Docker container
                     def dockerDownCmd = "docker-compose down"
                     def dockerUpCmd = "docker-compose up -d"
                     //On doit se connecter à dockerhub dans le serveur
                     sshagent(['ec2-dev-server']) {
-                        sh "ssh -o StrictHostKeyChecking=no ubuntu@13.39.82.122 ${dockerDownCmd}"
-                        sh "ssh -o StrictHostKeyChecking=no ubuntu@13.39.82.122 ${dockerUpCmd}"
+                        sh "ssh -o StrictHostKeyChecking=no ubuntu@35.181.48.145 ${dockerDownCmd}"
+                        sh "ssh -o StrictHostKeyChecking=no ubuntu@35.181.48.145 ${dockerUpCmd}"
                 }
             }
         }
