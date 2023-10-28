@@ -2,7 +2,7 @@
     agent any
     tools {
         // Utilisation de l'outil Maven test
-        maven 'maven-3.9.5'
+        maven 'Maven'
         dockerTool 'Docker'
     }
     stages {
