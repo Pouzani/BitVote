@@ -1,4 +1,4 @@
--pipeline {
+pipeline {
     agent any
     tools {
         // Utilisation de l'outil Maven test
