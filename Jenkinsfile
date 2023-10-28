@@ -1,5 +1,5 @@
 -pipeline {
-    // agent any
+    agent any
     tools {
         // Utilisation de l'outil Maven test
         maven 'Maven'
