@@ -2,7 +2,7 @@ pipeline {
     agent any
     tools {
         // Utilisation de l'outil Maven test
-        maven 'Maven'
+        maven 'maven-3.9.5'
         dockerTool 'Docker'
     }
     stages {
