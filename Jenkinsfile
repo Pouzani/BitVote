@@ -1,8 +1,8 @@
-pipeline {
+-pipeline {
     agent any
     tools {
         // Utilisation de l'outil Maven test
-        maven 'Maven'
+        maven 'maven-3.9.5'
         dockerTool 'Docker'
     }
     stages {
@@ -35,7 +35,7 @@ pipeline {
                 script {
                     dir('Back-end'){
                     echo "building the docker image ..."
-                    withCredentials([usernamePassword(credentialsId: 'dockerhub-repo', passwordVariable: 'PASSWORD', usernameVariable: 'USER')]) {
+                    withCredentials([usernamePassword(credentialsId: 'dockerhub-credentials', passwordVariable: 'PASSWORD', usernameVariable: 'USER')]) {
                         sh 'docker build -t pihix/bitvote-app:1.0 .'
                         sh 'docker login -u $USER -p $PASSWORD'
                         //sh "echo $PASSWORD | docker login -u $USER --password-stdin"
