@@ -30,11 +30,7 @@ public class User implements UserDetails {
     @GeneratedValue
     private Long id;
 
-<<<<<<< HEAD
-    private String testv2;
-=======
-    private String test;
->>>>>>> e1c1e2ad54579c2af30929a442381cfc2250628e
+    private String testBahae;
 
     @Column(nullable = false)
     private String email;
