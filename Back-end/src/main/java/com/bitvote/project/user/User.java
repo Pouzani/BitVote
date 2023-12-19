@@ -30,6 +30,8 @@ public class User implements UserDetails {
     @GeneratedValue
     private Long id;
 
+    private String test;
+
     @Column(nullable = false)
     private String email;
 
